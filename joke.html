@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        #joke {
+            background: #ffffff;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            font-size: 1.2rem;
+            color: #34495e;
+        }
+        .emoji {
+            font-size: 100px;
+            transition: font-size 0.3s ease, color 0.3s ease;
+        }
+        .rating-buttons button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .rating-buttons button:hover {
+            background-color: #2980b9;
+        }
+        #message-box {
+            display: none;
+            background: #ffffff;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 10px;
+            width: 60%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            color: #34495e;
+            animation: fadeout 4s ease forwards;
+        }
+
+        @keyframes fadeout {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Joke App</h1>
+    <div id="joke">Click the button to see a joke!</div>
+    <button onclick="showJoke()">Get a Joke</button>
+
+    <div id="rating-section" style="display:none; margin-top: 20px;">
+        <p>Did you like the joke?</p>
+        <div class="rating-buttons">
+            <button onclick="rateJoke(1)">😂 Loved it!</button>
+            <button onclick="rateJoke(0)">😐 It was okay</button>
+            <button onclick="rateJoke(-1)">🙄 Not funny</button>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <span id="emoji" class="emoji">😀</span>
+    </div>
+
+    <div id="message-box"></div>
+
+    <script>
+        const jokes = [
+            "Why did the database administrator break up with the developer? They couldn't find a common key!",
+            "Why do IS students love spreadsheets? Because they excel at them!",
+            "Why was the computer cold in class? It left its Windows open!",
+            "Why did the IS student bring a ladder to class? To reach the high-level data!",
+            "Why do IS professors love coffee? Because it helps them stay JavaScripted!",
+            "What’s an IS student's favorite type of humor? Something they can Ctrl+Alt+Delete if it fails!"
+        ];
+
+        function showJoke() {
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            document.getElementById('joke').innerText = jokes[randomIndex];
+            document.getElementById('rating-section').style.display = 'block';
+        }
+
+        function rateJoke(rating) {
+            const emoji = document.getElementById('emoji');
+            const messageBox = document.getElementById('message-box');
+
+            if (rating === 1) {
+                emoji.textContent = "😂";
+                emoji.style.color = "green";
+                showMessage("You are my favorite!");
+            } else if (rating === 0) {
+                emoji.textContent = "😐";
+                emoji.style.color = "gray";
+                showMessage("OK, I'll try harder.");
+            } else if (rating === -1) {
+                emoji.textContent = "🙄";
+                emoji.style.color = "red";
+                showMessage("I don't like you.");
+            }
+
+            document.getElementById('joke').innerText = "Click the button to see another joke!";
+            document.getElementById('rating-section').style.display = 'none';
+        }
+
+        function showMessage(message) {
+            const messageBox = document.getElementById('message-box');
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
